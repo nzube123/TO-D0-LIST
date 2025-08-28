@@ -16,7 +16,7 @@ function gettodos() {
     return `
     <ul>
       ${todos.map(function (input, index) {
-      return `<li>${input} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ${Date()}  <button class="clearlist" onlick="" data-delete="${index}">delete</button></li>`
+      return `<li>${input} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ${Date()}  <button id="clist" data-delete="${index}">delete</button></li>`
     }).join('')}
     </ul>
     `
@@ -41,6 +41,12 @@ submit.addEventListener("click", () => {
   if (typeof (Storage) !== "undefined") {
     localStorage.setItem('tsd', JSON.stringify(todos));
   }
+
+
+
+
+  // after when the list item is created and the delete button is clicked
+
 })
 
 todos = JSON.parse(localStorage.getItem("tsd"));
@@ -48,17 +54,14 @@ todos = JSON.parse(localStorage.getItem("tsd"));
 divtodo.innerHTML = gettodos();
 
 
-var remove = document.getElementsByClassName("clearlist");
-for (let i = 0; i < remove.length; i++) {
+function removetodo(event) {
+  // Only run on [data-delete] items
+  let index = event.target.getAttribute('data-delete');
+  if (!index) return;
 
-  function removetodo(event) {
-    // Only run on [data-delete] items
-    let index = event.target.getAttribute('data-delete');
-    if (!index) return;
-
-    // Otherwise, remove the todo and rerender the UI
-    todos.splice(index, 1);
-    divtodo.innerHTML = gettodos();
-  }
-  remove[i].addEventListener("click", removetodo)
+  // Otherwise, remove the todo and rerender the UI
+  todos.splice(index, 1);
+  divtodo.innerHTML = gettodos();
 }
+
+divtodo.addEventListener("click", removetodo)

@@ -39,12 +39,6 @@ a {
 }
 
 /* to do list input form */
-form {
-  padding: 20px;
-  width: 40%;
-  align-items: center;
-  width: 90%;
-}
 
 li {
   width: 100%;
@@ -68,7 +62,19 @@ input:hover {
   text-align: center;
 }
 
-/* buttns in the form element general */
+/* button having the value add */
+#submit {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: grey;
+  color: white;
+  font-size: 9px;
+  font-family: Arial Black;
+  width: 5% !important;
+}
+
+/* Other delete buttons */
+
 button {
   padding: 10px;
   border-radius: 10px;
@@ -86,7 +92,7 @@ li {
   padding-bottom: 10px;
 }
 
-.clearlist {
+#clist {
   float: right;
   padding: 7px !important;
 }
