@@ -42,11 +42,6 @@ submit.addEventListener("click", () => {
     localStorage.setItem('tsd', JSON.stringify(todos));
   }
 
-
-
-
-  // after when the list item is created and the delete button is clicked
-
 })
 
 todos = JSON.parse(localStorage.getItem("tsd"));
