@@ -5,10 +5,10 @@
 
   color-scheme: light;
   color: rgba(255, 255, 255, 0.87);
-  /* background-color: #242424; */
+  background-color: #242424;
   background-color: #FFF;
 
-  font-synthesis: none;
+  font-synthesis: weight;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -99,4 +99,9 @@ li {
 
 #addl {
   padding: 20px;
+}
+
+::marker {
+  color: blue;
+  font-family: Comic Sans MS;
 }

@@ -1,62 +1,63 @@
-import './style.css'
-
-// saving every element into an array
-let submit = document.getElementById("submit");
-let input = document.getElementById("inputArea");
-let divtodo = document.getElementById("addl");
-
-// todo array of the various todo items
-var todos = [];
-
-
-function gettodos() {
-  if (!todos.length) {
-    alert("Empty input area")
+import './style.css';
+// assigning reef to the render function
+let { store, component } = reef;
+let { render } = reef;
+// todo array
+let todo = [];
+// get todos function
+function gettodo() {
+  if (!todo.length) {
+    alert("Todo list is empty")
   } else {
     return `
     <ul>
-      ${todos.map(function (input, index) {
-      return `<li>${input} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ${Date()}  <button id="clist" data-delete="${index}">delete</button></li>`
+      ${todo.map(function (input, index) {
+      return `<li>${input} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ${Date()}  <button id="clist" data-delete = "${index}">Delete</button> `
     }).join('')}
     </ul>
     `
   }
 }
+// various elements like add button inputarea and the section where the data is to be displayed
+let submit = document.getElementById("submit");
+let input = document.getElementById("inputArea");
+let divtodo = document.getElementById("addl");
 
-
-
-// script to add element to the array that will display in the section below
+//function to be carried out anytime the Add button is clicked
 submit.addEventListener("click", () => {
-
-  // confitional statement to cjeck if the input arear is filled or empty
   if (!input.value) {
-    // action when the input area is empty
-    window.alert("Input Area is empty")
+    alert("Input area is empty")
   } else {
-    todos.push(input.value);
-    divtodo.innerHTML = gettodos();
+    todo.push(input.value);
+    render(divtodo, gettodo());
+    input.value = '';
   }
-
-  // saving the array in the array by turning it into a string
-  if (typeof (Storage) !== "undefined") {
-    localStorage.setItem('tsd', JSON.stringify(todos));
-  }
-
 })
 
-todos = JSON.parse(localStorage.getItem("tsd"));
-// the declaration of the function on the page by default
-divtodo.innerHTML = gettodos();
+// adding value to the localstorage whenever a render function is carried out
+document.addEventListener("reef:render", function () {
+  localStorage.setItem("todolist", JSON.stringify(todo));
+  console.log("was updated");
+})
 
+// setting a default value for the todo array
+todo = JSON.parse(localStorage.getItem("todolist"));
+
+// initiating the gettodo() function by default
+render(divtodo, gettodo())
 
 function removetodo(event) {
-  // Only run on [data-delete] items
   let index = event.target.getAttribute('data-delete');
-  if (!index) return;
+  if (!index) {
+    return;
+  } else {
+    todo.splice(index, 1);
+    render(divtodo, gettodo())
+  }
 
-  // Otherwise, remove the todo and rerender the UI
-  todos.splice(index, 1);
-  divtodo.innerHTML = gettodos();
+  // localstorage (creating a localstorage when ever the submit button is clicked)
+  if (typeof (Storage) != 'undefined') {
+    localStorage.setItem("todolist", JSON.stringify(todo));
+  }
 }
-
-divtodo.addEventListener("click", removetodo)
+divtodo.addEventListener("click", removetodo);
