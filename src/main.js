@@ -1,14 +1,16 @@
-import './style.css';
+import './style.css'
 // assigning reef to the render function
 // let { render } = reef;
-let { store, component } = reef;
-
-let divtodo = document.getElementById("addl");
+let { signal, component } = reef;
 
 
 // todo array
-// let todo = [];
-let datatodo = store({ todo: JSON.parse(localStorage.getItem("todolist")) || [] });
+let datatodo = signal({
+  todo: JSON.parse(localStorage.getItem("todolist")) || []
+});
+
+// selecting the div where the data is to be displayed
+let divtodo = document.getElementById("addl");
 
 // get todos function
 component(divtodo, function gettodo() {
@@ -37,13 +39,11 @@ submit.addEventListener("click", () => {
     datatodo.todo.push(input.value);
     input.value = '';
   }
-  if (typeof (Storage) != "undefined") {
     localStorage.setItem("todolist", JSON.stringify(datatodo.todo));
-  }
 })
 
 // setting a default value for the todo array
-datatodo.todo = JSON.parse(localStorage.getItem("todolist"));
+// datatodo.todo = JSON.parse(localStorage.getItem("todolist"));
 // initiating the gettodo() function by default
 
 function removetodo(event) {
